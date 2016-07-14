@@ -53,10 +53,10 @@ And here the Use Case Diagram:
 
 The server hosting our DB and WebSite is Altervista:
 Altervista is an italian web platform founded by a Turin polytechnic student in 2000. It provides the possibility to create a web site with PHP, database SQL and FTP access.
+</br></br>
+# HowTo </br>
 
-# HowTo 
-
-Arduino Side:
+<b>Arduino Side:</b>
 </br>
 What we need:</br>
 </br>
