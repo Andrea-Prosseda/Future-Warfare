@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare.extra;
+package moderwarfareapp.modernwarfare;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,6 @@ import android.content.Context;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-
-import moderwarfareapp.futurewarfare.R;
 
 /**
  * Created by andrea on 30/04/16.

@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare.extra;
+package moderwarfareapp.modernwarfare;
 
 /**
  * Created by andrea on 30/04/16.

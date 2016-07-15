@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.LoginRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -88,5 +91,24 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //it disables the back button of the smartphone in this Activity
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class LoginRequest extends StringRequest {
+        private static final String LOGIN_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/login.php";
+        private Map<String, String> params;
+
+        public LoginRequest(String username, String password, Response.Listener<String> listener){
+            super(Request.Method.POST, LOGIN_URL, listener, null);
+            params = new HashMap<>();
+            params.put("username", username);
+            params.put("password", password);
+        }
+        //this constructor run the request with a POST using the url LOGIN_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

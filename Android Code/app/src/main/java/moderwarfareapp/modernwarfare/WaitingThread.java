@@ -1,13 +1,23 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.UpdateNextCreator;
+import java.util.*;
 
 /**
  * Created by Andrea on 12/05/16.
@@ -16,6 +26,7 @@ public class WaitingThread extends Thread {
     private Handler handler;
     private String nameGame;
     private RequestQueue queue;
+    private boolean run = true;
 
     //this thread needs of handler, nameGame and the queue of the JSON request
     public WaitingThread(Handler handler, String nameGame, RequestQueue queue){
@@ -54,7 +65,7 @@ public class WaitingThread extends Thread {
         };
 
         //this is the real JSON Request
-        UpdateNextCreator updateNextCreator= new UpdateNextCreator(nameGame, responseListener);
+        UpdateNextCreator  updateNextCreator= new UpdateNextCreator(nameGame, responseListener);
 
         //must be add in this queue
         queue.add(updateNextCreator);
@@ -68,5 +79,23 @@ public class WaitingThread extends Thread {
         msg.setData(b);
         handler.sendMessage(msg);
     }
+
+    class UpdateNextCreator extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/updateNextCreator.php";
+        private Map<String, String> params;
+
+        public UpdateNextCreator (String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
 }
 

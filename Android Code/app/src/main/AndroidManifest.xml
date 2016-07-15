@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="moderwarfareapp.futurewarfare">
+    package="moderwarfareapp.modernwarfare">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="moderwarfareapp.futurewarfare.LoginActivity"
+            android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,31 +40,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="moderwarfareapp.futurewarfare.RegisterActivity"
+            android:name=".RegisterActivity"
             android:label="Register"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.UserAreaActivity"
+            android:name=".UserAreaActivity"
             android:label="Home"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.JoinGameActivity"
+            android:name=".JoinGameActivity"
             android:label="Available Games"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.CreateGameActivity"
+            android:name=".CreateGameActivity"
             android:label="Create Game"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.WaitingCreatorActivity"
+            android:name=".WaitingCreatorActivity"
             android:label="Waiting"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.WaitingPlayersActivity"
+            android:name=".WaitingPlayersActivity"
             android:label="Waiting"
             android:screenOrientation="portrait" />
         <activity
-            android:name="moderwarfareapp.futurewarfare.DeviceList"
+            android:name=".DeviceList"
             android:label="Device List"
             android:screenOrientation="portrait" />
         <!--
@@ -80,7 +80,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="moderwarfareapp.futurewarfare.MapsActivity"
+            android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="landscape" />
     </application>

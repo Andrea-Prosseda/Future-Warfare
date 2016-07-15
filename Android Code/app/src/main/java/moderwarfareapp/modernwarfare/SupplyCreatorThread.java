@@ -1,16 +1,23 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.*;
-import moderwarfareapp.futurewarfare.requests.SupplyCreatorRequest;
-import moderwarfareapp.futurewarfare.requests.UpdateSupplyRequest;
 
 /**
  * Created by Gianlu on 12/05/16.
@@ -55,7 +62,7 @@ public class SupplyCreatorThread extends Thread {
                                 String userAble = jsonResponse.getString("nextCreator");    //real user authorized to create a supply
 
                                 if (userAble.equals(myUsername)) {      //if we are the user authorized, then
-                                    int randomvalue = (int) (Math.random() * 100);     //we calculate a random number in range (1,100)
+                                    int randomvalue = (int) (Math.random() * 1000);     //we calculate a random number in range (1,100)
                                     if (randomvalue > 0) {      //here you can modify the probability to create a supply
                                         GlobalValue.getInstance().setAbleToCreate(false);           //current user is unauthorized to create a new supply
 
@@ -105,7 +112,7 @@ public class SupplyCreatorThread extends Thread {
         };
 
         //this is the real JSON Request
-        UpdateSupplyRequest updateSupplyRequest = new UpdateSupplyRequest (nameGame, supplyLatitude, supplyLongitude, responseListener);
+        UpdateSupplyRequest  updateSupplyRequest = new UpdateSupplyRequest (nameGame, supplyLatitude, supplyLongitude, 50, responseListener);
 
         //must be add in this queue
         queue.add(updateSupplyRequest);
@@ -138,5 +145,42 @@ public class SupplyCreatorThread extends Thread {
     //when the game ends thread must be stopped
     public void stopThread (){
         run = false;
+    }
+
+    class SupplyCreatorRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getSupplyCreator.php";
+        private Map<String, String> params;
+
+        public SupplyCreatorRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    class UpdateSupplyRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/updateSupply.php";
+        private Map<String, String> params;
+
+        public UpdateSupplyRequest (String nameGame, double latitude, double longitude, double radius, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+            params.put("latitude", ""+latitude);
+            params.put("longitude", ""+longitude);
+            params.put("radius", ""+radius);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.bluetooth.BluetoothSocket;
 

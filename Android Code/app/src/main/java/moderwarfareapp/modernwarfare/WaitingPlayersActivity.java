@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,12 +10,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AnalogClock;
 import android.widget.Button;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.DeleteSingleRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WaitingPlayersActivity extends AppCompatActivity {
     private static  String nameGame, kindOfGame;
@@ -112,5 +118,25 @@ public class WaitingPlayersActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //it disables the back button of the smartphone in this Activity
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class DeleteSingleRequest extends StringRequest {
+        private static final String DELETION_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/deleteSinglePlayer.php";
+        private Map<String, String> params;
+
+        public DeleteSingleRequest(String nameGame, String username, Response.Listener<String> listener){
+            super(Request.Method.POST, DELETION_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+            params.put("username", username);
+            System.out.println(username);
+        }
+        //this constructior run the request with a POST using the url DELETION_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

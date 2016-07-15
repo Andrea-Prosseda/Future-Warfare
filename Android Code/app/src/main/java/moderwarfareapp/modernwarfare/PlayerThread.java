@@ -1,13 +1,20 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.CheckStartedGameRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Gianlu on 13/05/16.
@@ -62,11 +69,11 @@ public class PlayerThread extends Thread {
     }
 
     //this method exchanges information with WaitingCreatorActivity thanks to handler
-    private void notifyMessage(String mess) {
+    private void notifyMessage(String str) {
         //when thread send a message to the Main activiy, it must refresh the text with number of players
         Message msg = handler.obtainMessage();
         Bundle b = new Bundle();
-        b.putString(mess,"");
+        b.putString("start", ""+str);
         msg.setData(b);
         handler.sendMessage(msg);
     }
@@ -74,5 +81,23 @@ public class PlayerThread extends Thread {
     //when user want to start the game, thread must be stopped
     public void stopThread (){
         run = false;
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class CheckStartedGameRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getStartValue.php";
+        private Map<String, String> params;
+
+        public CheckStartedGameRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

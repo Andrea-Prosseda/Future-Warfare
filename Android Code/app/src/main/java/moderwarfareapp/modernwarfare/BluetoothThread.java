@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
@@ -12,11 +12,12 @@ import java.io.OutputStream;
  * Created by andrea on 14/05/16.
  */
 public class BluetoothThread extends Thread{
-    private Handler handler;                    //handler required to exchange information with the main activity
     private BluetoothSocket btSocket;           //socket required for connection and exchange of messages
     private OutputStream outStream;             //required for sending of messages
     private InputStream inStream;               //required for receiving of messages
     private boolean firstIteration = true;      //required to send Arduino the kindOfGame
+
+    private Handler handler;
     private boolean run = true;
 
     //this thread needs only handler, furthermore, the bluetooth socket (to exchange bluetooth message) is taken from GlobalValue
@@ -33,6 +34,7 @@ public class BluetoothThread extends Thread{
         }
     }
 
+
     public void run (){
         while(run){
             if(firstIteration) {        //if the game is just started, notify the kindOfGame
@@ -47,18 +49,27 @@ public class BluetoothThread extends Thread{
 
             sendMessageBluetooth("1");          //with 1 i ask remaining number of shots
             String colpi = receiveMessageBluetooth();
-            notifyMessage("colpi",colpi);
+            notifyMessageShots(colpi);
 
             sendMessageBluetooth("2");          //with 2 i ask if i'm dead: it response with 1 if i'm dead, 0 otherwise
             String morto = receiveMessageBluetooth();
-            notifyMessage("morto",morto);
+            notifyMessageDead(morto);
 
 
         }
     }
 
-    //this method exchange information with MapsActivity thanks to handler
-    private void notifyMessage(String notify, String str) {
+    //these methods exchange information with MapsActivity thanks to handler
+    private void notifyMessageDead(String str) {
+        //if i'm dead thread sends this message to MapsActivity
+        Message msg = handler.obtainMessage();
+        Bundle b = new Bundle();
+        b.putString("morto", ""+ str);
+        msg.setData(b);
+        handler.sendMessage(msg);
+    }
+
+    private void notifyMessageShots(String str) {
         //thread sends this message to MapsActivity
         Message msg = handler.obtainMessage();
         Bundle b = new Bundle();

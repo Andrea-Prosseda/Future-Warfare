@@ -1,14 +1,17 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.EnemiesCoordinatesGameRequest;
+import java.util.*;
 
 /**
  * Created by Gianlu on 12/05/16.
@@ -38,7 +41,7 @@ public class MapsThread extends Thread {
                         if (success) {  //if the exchange is correct
                             JSONArray jsonArray = jsonResponse.getJSONArray("users");
                             String mess = jsonArray.toString();
-                            notifyMessage("updateMap",mess);
+                            notifyMessageUpdate(mess);
                             //a mess contains all users coordinates is sent to MapsActivity thanks to handler
                         }
                     } catch (JSONException e) {
@@ -61,7 +64,7 @@ public class MapsThread extends Thread {
 
             //after 6s a request to remove users coordinates on map is sent to MapsActivity
             String mess = "clear";
-            notifyMessage("clear",mess);
+            notifyMessageClear(mess);
 
             try {
                 Thread.sleep(15000);    //then, for 15s, no positions are shown in the map
@@ -73,12 +76,21 @@ public class MapsThread extends Thread {
         }
     }
 
-    //this method exchange information with MapsActivity thanks to handler
-    private void notifyMessage(String mess, String str) {
+    //these methods exchange information with MapsActivity thanks to handler
+    private void notifyMessageUpdate(String str) {
+        //when thread send this message to MapsActivity, it must insert enemies coordinates on the map
+        Message msg = handler.obtainMessage();
+        Bundle b = new Bundle();
+        b.putString("updateMap", ""+str);
+        msg.setData(b);
+        handler.sendMessage(msg);
+    }
+
+    private void notifyMessageClear(String str) {
         //when thread send this message to MapsActivity, it must clear enemies coordinates on the map
         Message msg = handler.obtainMessage();
         Bundle b = new Bundle();
-        b.putString(mess, ""+str);
+        b.putString("clear", ""+str);
         msg.setData(b);
         handler.sendMessage(msg);
     }
@@ -87,4 +99,23 @@ public class MapsThread extends Thread {
     public void stopThread (){
         run = false;
     }
+
+    //inner class, used to send the JSON request to a specific URL
+    class EnemiesCoordinatesGameRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getCoordinates.php";
+        private Map<String, String> params;
+
+        public EnemiesCoordinatesGameRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
 }

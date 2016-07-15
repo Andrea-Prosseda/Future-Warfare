@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,13 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.DeleteRequest;
-import moderwarfareapp.futurewarfare.requests.JoinRequest;
 
 public class UserAreaActivity extends AppCompatActivity {
     private boolean connected = false;
@@ -49,7 +51,7 @@ public class UserAreaActivity extends AppCompatActivity {
                 };
 
                 //this is the real JSON Request
-                DeleteRequest deleteRequest = new DeleteRequest(nameGame, responseListener);
+                WaitingCreatorActivity.DeleteRequest deleteRequest = new WaitingCreatorActivity().new DeleteRequest(nameGame, responseListener);
 
                 //must be add in this queue
                 RequestQueue queue = Volley.newRequestQueue(UserAreaActivity.this);
@@ -132,5 +134,16 @@ public class UserAreaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //it disables the back button of the smartphone in this Activity
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class JoinRequest extends StringRequest {
+        private static final String GAMES_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getGames.php";
+
+        public JoinRequest(Response.Listener<String> listener){
+            super(Request.Method.GET, GAMES_URL, listener, null);
+        }
+        //this constructor run the request with a GET using the url GAMES_URL
+        // when volley has done the request, listener is populated.
     }
 }

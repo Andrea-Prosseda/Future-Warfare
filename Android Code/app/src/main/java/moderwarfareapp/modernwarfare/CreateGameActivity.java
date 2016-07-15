@@ -1,7 +1,7 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
-import moderwarfareapp.futurewarfare.requests.CreateGameRequest;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,12 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateGameActivity extends AppCompatActivity {
     private static  RadioGroup radioGroup;
@@ -91,5 +98,30 @@ public class CreateGameActivity extends AppCompatActivity {
                 queue.add(createGameRequest);
             }
         });
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class CreateGameRequest extends StringRequest {
+        private static final String CREATION_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/createGame.php";
+        private Map<String, String> params;
+
+        public CreateGameRequest(String nameGame, String kindOfGame, String location, String players, String start, String date, String duration, String creator, Response.Listener<String> listener){
+            super(Request.Method.POST, CREATION_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+            params.put("kindOfGame", kindOfGame);
+            params.put("location", location);
+            params.put("players", players);
+            params.put("start", start);
+            params.put("date", date);
+            params.put("duration", duration);
+            params.put("creator", creator);
+        }
+        //this constructor run the request with a POST using the url CREATION_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

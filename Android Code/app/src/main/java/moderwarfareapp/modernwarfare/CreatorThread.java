@@ -1,13 +1,17 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import moderwarfareapp.futurewarfare.requests.NumberOfPlayerRequest;
+import java.util.*;
 
 /**
  * Created by Gianlu on 12/05/16.
@@ -39,7 +43,7 @@ public class CreatorThread extends Thread {
                             //number of players is changed in WaitingCreatorActivity
                             String players = jsonResponse.getString("numberofplayers");
                             String mess = "Current Players: " + players;
-                            notifyMessage("refresh",mess);
+                            notifyMessage(mess);
                         }
                     }
                     catch (JSONException e){
@@ -63,11 +67,11 @@ public class CreatorThread extends Thread {
     }
 
     //this method exchanges information with WaitingCreatorActivity thanks to handler
-    private void notifyMessage(String mess, String str) {
+    private void notifyMessage(String str) {
         //when thread send a message to the Main activiy, it must refresh the text with number of players
         Message msg = handler.obtainMessage();
         Bundle b = new Bundle();
-        b.putString(mess, ""+str);
+        b.putString("refresh", ""+str);
         msg.setData(b);
         //System.out.println("Messaggio inviato dal thread: " + str);
         handler.sendMessage(msg);
@@ -76,5 +80,23 @@ public class CreatorThread extends Thread {
     //when user want to start the game, thread must be stopped
     public void stopThread (){
         run = false;
+    }
+
+    //inner class, used to send the JSON request to a specific URL
+    class NumberOfPlayerRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getNofPlayers.php";
+        private Map<String, String> params;
+
+        public NumberOfPlayerRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

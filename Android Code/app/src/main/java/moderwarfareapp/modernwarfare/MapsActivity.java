@@ -1,4 +1,4 @@
-package moderwarfareapp.futurewarfare;
+package moderwarfareapp.modernwarfare;
 
 import android.Manifest;
 import android.bluetooth.BluetoothSocket;
@@ -24,8 +24,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,21 +47,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import moderwarfareapp.futurewarfare.extra.PermissionUtils;
-import moderwarfareapp.futurewarfare.requests.DeleteSingleRequest;
-import moderwarfareapp.futurewarfare.requests.DetailGameRequest;
-import moderwarfareapp.futurewarfare.requests.GetRankingRequest;
-import moderwarfareapp.futurewarfare.requests.InsertCoordinatesRequest;
-import moderwarfareapp.futurewarfare.requests.InsertSupplyRequest;
-import moderwarfareapp.futurewarfare.requests.UpdateLivesRequest;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;      //fields required to manage map in this Activity
     private boolean mPermissionDenied = false;
-    private UiSettings mUiSettings;                     //fields required to manage map in this Activity
+    private UiSettings mUiSettings;
     private GoogleMap mMap;
 
     private Marker[] marks;                             //this array contains markers of all players connected in the same game
@@ -93,141 +90,107 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_maps);
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        //take fields from the previous Activity
-        Intent intent = getIntent();
-        nameGame = intent.getStringExtra("nameGame");
-        username = intent.getStringExtra("username");
-        name = intent.getStringExtra("name");
-        kindOfGame = intent.getStringExtra("kindOfGame");
+    //take fields from the previous Activity
+    Intent intent = getIntent();
+    nameGame = intent.getStringExtra("nameGame");
+    username = intent.getStringExtra("username");
+    name = intent.getStringExtra("name");
+    kindOfGame = intent.getStringExtra("kindOfGame");
 
-        if (kindOfGame.equals("Death Match"))
-            deathMatch = true;
-        else
-            deathMatch = false;
+    if(kindOfGame.equals("Death Match"))
+        deathMatch = true;
+    else
+        deathMatch = false;
 
-        //data of the game must be load at the start of the Activity
-        getDataGame();
+    //data of the game must be load at the start of the Activity
+    getDataGame();
 
-        //this textview show remaining time of the game
-        textViewTime = (TextView) findViewById(R.id.textViewTime);
+    //this textview show remaining time of the game
+    textViewTime = (TextView) findViewById(R.id.textViewTime);
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    SupportMapFragment mapFragment =
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+    mapFragment.getMapAsync(this);
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        //is the "i" button
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                getDataGame();
-                if (deathMatch) {
-                    Snackbar.make(view, "Game: " + nameGame + "\t\t\t\t" + "Shot: " + shot + "/" + totalShot + "\t\t\t\t" + "Lives: " + lives +
-                            "\t\t\t\t" + "Players: " + players + "\t\t\t\t" + "Time: " + duration + " min", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    Snackbar.make(view, "Game: " + nameGame + "\t\t\t\t" + "Shot: " + shot + "/" + totalShot + "\t\t\t\t" + "Dead: " + dead +
-                            "\t\t\t\t" + "Players: " + players + "\t\t\t\t" + "Time: " + duration + " min", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+    //is the "i" button
+    fab.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(final View view) {
+            getDataGame();
+            if(deathMatch) {
+                Snackbar.make(view, "Game: " + nameGame + "\t\t\t\t" + "Shot: " + shot + "/" + totalShot + "\t\t\t\t" + "Lives: " + lives +
+                        "\t\t\t\t" + "Players: " + players + "\t\t\t\t" + "Time: " + duration + " min", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-        });
-
-        //handlers help the execution of the thread
-        RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
-        handler = new MyHandler();
-        mapsThread = new MapsThread(handler, nameGame, queue);
-        mapsThread.start();
-        //mapsThread used to manage positions of enemies
-
-        btThread = new BluetoothThread(handler);
-        btThread.start();
-        //btThread used to communicate with arduino
-
-        if (deathMatch) {
-            winnerThread = new CheckWinnerThread(handler, nameGame, queue);
-            winnerThread.start();
+            else{
+                Snackbar.make(view, "Game: " + nameGame + "\t\t\t\t" + "Shot: " + shot + "/" + totalShot + "\t\t\t\t" + "Dead: " + dead +
+                        "\t\t\t\t" + "Players: " + players + "\t\t\t\t" + "Time: " + duration + " min", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
+    });
 
-        //now we want to check if gps location is enabled and works
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean gps = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    //handlers help the execution of the thread
+    RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
+    handler = new MyHandler();
+    mapsThread = new MapsThread(handler, nameGame, queue);
+    mapsThread.start();
+    //mapsThread used to manage positions of enemies
 
-        if (!gps) { //if gps is off a message is shown
+    btThread = new BluetoothThread(handler);
+    btThread.start();
+    //btThread used to communicate with arduino
+
+    if(deathMatch) {
+        winnerThread = new CheckWinnerThread(handler, nameGame, queue);
+        winnerThread.start();
+    }
+
+    //now we want to check if gps location is enabled and works
+    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    boolean gps = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+    if (!gps) { //if gps is off a message is shown
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setMessage("Please turn on your GPS").setNegativeButton("Ok", null).create().show();
+    } else {
+        //if it is on, user has to allow permission, mandatory to use the map
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-            builder.setMessage("Please turn on your GPS").setNegativeButton("Ok", null).create().show();
-        } else {
-            //if it is on, user has to allow permission, mandatory to use the map
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                builder.setMessage("Please allow permission on GPS").setNegativeButton("Ok", null).create().show();
-                return;
-            }
-            //position of the player is update every 20s or every 50 meters
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    2000, // 2 seconds interval between updates
-                    50, // 50 meters between updates
-                    new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            //if the location is changed, take latitude and longitude and send them to server with a JSON request
-                            String latitude = String.valueOf(location.getLatitude());
-                            String longitude = String.valueOf(location.getLongitude());
+            builder.setMessage("Please allow permission on GPS").setNegativeButton("Ok", null).create().show();
+            return;
+        }
+        //position of the player is update every 20s or every 50 meters
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                2000, // 2 seconds interval between updates
+                50, // 50 meters between updates
+            new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    //if the location is changed, take latitude and longitude and send them to server with a JSON request
+                    String latitude = String.valueOf(location.getLatitude());
+                    String longitude = String.valueOf(location.getLongitude());
 
-                            myPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                            GlobalValue.getInstance().setMyPosition(myPosition);
+                    myPosition = new LatLng(location.getLatitude(),location.getLongitude());
+                    GlobalValue.getInstance().setMyPosition(myPosition);
 
-                            if (firstIteration) {
-                                if (creator.equals(username)) {
-                                    Response.Listener<String> responseListenerRandom = new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            //a JSON request is sent every 6s to notify to MapsActivity to show enemies in the map
-                                            try {
-                                                JSONObject jsonResponse = new JSONObject(response);
-                                                boolean success = jsonResponse.getBoolean("success");
-                                                if (success) {  //if the exchange is correct
-                                                    System.out.println("Initialization complete");
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    };
-
-                                    //this is the real JSON Request
-                                    InsertSupplyRequest insertSupplyRequest = new InsertSupplyRequest(nameGame, 0.0, 0.0, responseListenerRandom);
-                                    RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
-
-                                    //must be add in this queue
-                                    queue.add(insertSupplyRequest);
-                                }
-
-                                firstIteration = false;
-                                RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
-
-                                supplyCreatorThread = new SupplyCreatorThread(handler, nameGame, queue);
-                                supplyCreatorThread.start();
-
-                                checkSupplyThread = new CheckSupplyThread(handler, nameGame, queue);
-                                checkSupplyThread.start();
-                            }
-
-                            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    if (firstIteration){
+                        if(creator.equals(username)){
+                            Response.Listener<String> responseListenerRandom = new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
+                                    //a JSON request is sent every 6s to notify to MapsActivity to show enemies in the map
                                     try {
                                         JSONObject jsonResponse = new JSONObject(response);
                                         boolean success = jsonResponse.getBoolean("success");
-
-                                        if (!success) {   //message error
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                                            builder.setMessage("Error on updating coordiates").setNegativeButton("Ok", null).create().show();
+                                        if (success) {  //if the exchange is correct
+                                            System.out.println("Initialization complete");
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -236,26 +199,62 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             };
 
                             //this is the real JSON Request
-                            InsertCoordinatesRequest insertCoordinatesRequest = new InsertCoordinatesRequest(nameGame, username, latitude, longitude, responseListener);
+                            InsertSupplyRequest insertSupplyRequest= new InsertSupplyRequest(nameGame, 0.0, 0.0, 0.0, responseListenerRandom);
+                            RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
 
                             //must be add in this queue
-                            RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
-                            queue.add(insertCoordinatesRequest);
+                            queue.add(insertSupplyRequest);
                         }
 
+                        firstIteration = false;
+                        RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
+
+                        supplyCreatorThread = new SupplyCreatorThread(handler, nameGame, queue);
+                        supplyCreatorThread.start();
+
+                        checkSupplyThread = new CheckSupplyThread(handler, nameGame, queue);
+                        checkSupplyThread.start();
+                    }
+
+                    Response.Listener<String> responseListener = new Response.Listener<String>(){
                         @Override
-                        public void onProviderDisabled(String provider) {
-                        }
+                        public void onResponse(String response) {
+                            try{
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
 
-                        @Override
-                        public void onProviderEnabled(String provider) {
+                                if(!success){   //message error
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                                    builder.setMessage("Error on updating coordiates").setNegativeButton("Ok",null).create().show();
+                                }
+                            }
+                            catch (JSONException e){
+                                e.printStackTrace();
+                            }
                         }
+                    };
 
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-                        }
+                    //this is the real JSON Request
+                    InsertCoordinatesRequest insertCoordinatesRequest = new InsertCoordinatesRequest(nameGame, username, latitude, longitude, responseListener);
 
-                    });
+                    //must be add in this queue
+                    RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
+                    queue.add(insertCoordinatesRequest);
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+            });
         }
     }
 
@@ -338,6 +337,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             //winnersthread notify to this activity if currentPlayer is the last one player in the game
             else if (bundle.containsKey("lastPlayer")){
+                System.out.println("entraaaa");
                 getWinners();
             }
 
@@ -361,7 +361,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         old_supply = new LatLng(circle.getCenter().latitude, circle.getCenter().longitude);
                         sendMessageBluetooth("6");
                         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                        builder.setMessage("Shots Reloaded").setPositiveButton("Ok",null).create().show();
+                        builder.setMessage("Shots reloaded").setPositiveButton("Ok",null).create().show();
                         System.out.println("supply taken");
                     }
                 }
@@ -429,7 +429,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         };
 
         //this is the real JSON Request
-        DeleteSingleRequest deletePlayerFromGame = new DeleteSingleRequest(nameGame, username, responseListener);
+        WaitingPlayersActivity.DeleteSingleRequest deletePlayerFromGame = new WaitingPlayersActivity().new DeleteSingleRequest(nameGame, username, responseListener);
 
         //must be add in this queue
         RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
@@ -554,11 +554,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         };
         //this is the real JSON Request
-        UpdateLivesRequest updateLivesRequest = new UpdateLivesRequest(username, nameGame, String.valueOf(lives), responseListener);
+        UpdateLives updateLives = new UpdateLives(username, nameGame, String.valueOf(lives), responseListener);
 
         //must be add in this queue
         RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
-        queue.add(updateLivesRequest);
+        queue.add(updateLives);
 
         Response.Listener<String> responseListener2 = new Response.Listener<String>(){
             @Override
@@ -661,6 +661,104 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
+    }
+
+    //inner classes, used to send the JSON request to a specific URL
+    class DetailGameRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getSpecificGame.php";
+        private Map<String, String> params;
+
+        public DetailGameRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    //inner classes, used to send the JSON request to a specific URL
+    class InsertCoordinatesRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/insertCoordinates.php";
+        private Map<String, String> params;
+
+        public InsertCoordinatesRequest(String nameGame, String username, String latitude, String longitude, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+            params.put("username", username);
+            params.put("latitude", latitude);
+            params.put("longitude", longitude);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    //inner classes, used to send the JSON request to a specific URL
+    class UpdateLives extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/updateLives.php";
+        private Map<String, String> params;
+
+        public UpdateLives(String username,String nameGame, String lives, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("username", username);
+            params.put("nameGame", nameGame);
+            params.put("lives", lives);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    //inner classes, used to send the JSON request to a specific URL
+    class GetRankingRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/getRanking.php";
+        private Map<String, String> params;
+
+        public GetRankingRequest(String nameGame, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    //inner classes, used to send the JSON request to a specific URL
+    class InsertSupplyRequest extends StringRequest {
+        private static final String REQUEST_URL = "http://modernwarfareapp.altervista.org/backend/operazioni/insertSupply.php";
+        private Map<String, String> params;
+
+        public InsertSupplyRequest(String nameGame, double latitude, double longitude, double radius, Response.Listener<String> listener){
+            super(Request.Method.POST, REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("nameGame", nameGame);
+            params.put("latitude", ""+latitude);
+            params.put("longitude", ""+longitude);
+            params.put("radius", ""+radius);
+        }
+        //this constructor run the request with a POST using the url REQUEST_URL
+        // when volley has done the request, listener is populated.
+
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 
     // method used to comunicate with ArduinoSide
