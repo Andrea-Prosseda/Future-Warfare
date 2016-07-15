@@ -11,7 +11,7 @@ Thanks to HC-06 module bluetooth, we have the possibilty to always check our pos
 
 
 
-</br><p align="center"><b><a href="modernwarfareapp.altervista.org/index.html">Visit our Web Site</a></b></p></br>
+</br><p align="center"><b><a href="http://www.modernwarfareapp.altervista.org/index.html">Visit our Web Site</a></b></p></br>
 </br>
 You can find the presentation of the project here:
 http://www.slideshare.net/AndreaProsseda/future-warfare-64040999
