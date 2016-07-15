@@ -53,12 +53,9 @@ Here an Er Scheme of our DataBase:
 And here the Use Case Diagram:
 <p align="center"><img src="http://modernwarfareapp.altervista.org/images/UseCaseDiagram.png" width="500" heigth="500"/> </p></br>
 
-The server hosting our DB and WebSite is Altervista:
-Altervista is an italian web platform founded by a Turin polytechnic student in 2000. It provides the possibility to create a web site with PHP, database SQL and FTP access.
+The server hosting our DB and WebSite is Altervista: Altervista is an italian web platform founded by a Turin polytechnic student in 2000. It provides the possibility to create a web site with PHP, database SQL and FTP access.
 
-
-# HowTo </br>
-We have divided this part 
+# How To
 
 <b>- Arduino Side:</b>
 </br>
