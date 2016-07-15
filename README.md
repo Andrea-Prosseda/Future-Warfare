@@ -9,7 +9,9 @@ Our concept is born with the aim to involve people in this kind of game without 
 
 Thanks to HC-06 module bluetooth, we have the possibilty to always check our position in the map, steadily control our munitions and life, without forgetting enemies in the match. Moreover, the game provides friendly and deathmatch modality: in this way, fun/enjoy is ensured! 
 
-</br><p align="center"><b>modernwarfareapp.altervista.org/index.html</b></p></br>
+
+
+</br><p align="center"><b><a href="modernwarfareapp.altervista.org/index.html">Visit our Web Site</a></b></p></br>
 </br>
 You can find the presentation of the project here:
 http://www.slideshare.net/AndreaProsseda/future-warfare-64040999
