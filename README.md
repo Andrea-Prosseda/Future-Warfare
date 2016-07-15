@@ -15,7 +15,7 @@ Thanks to HC-06 module bluetooth, we have the possibilty to always check our pos
 </br>
 You can find the presentation of the project <a href="http://www.slideshare.net/AndreaProsseda/future-warfare-64040999">here</a>
 
-And a Demo <a href="https://vimeo.com/174756680">here</a>
+Demo <a href="https://vimeo.com/174756680">here</a>
 
 
 # Used Tecnologies
