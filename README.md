@@ -24,7 +24,7 @@ Demo <a href="https://vimeo.com/174756680">here</a>
 
 - Android Studio
 
-- Google Maps APIs: https://developers.google.com/maps/documentation/android-api/
+- Google Maps APIs: https://developers.google.com/maps/documentation/android-api
 
 - Hosting Database "Altervista.org": http://it.altervista.org
 
@@ -34,7 +34,7 @@ Demo <a href="https://vimeo.com/174756680">here</a>
 
 - Arduino IDE
 
-- Fritzing: http://fritzing.org/home/
+- Fritzing: http://fritzing.org/home
 
 - IRremote library: https://github.com/z3t0/Arduino-IRremote
 
@@ -55,10 +55,12 @@ And here the Use Case Diagram:
 
 The server hosting our DB and WebSite is Altervista:
 Altervista is an italian web platform founded by a Turin polytechnic student in 2000. It provides the possibility to create a web site with PHP, database SQL and FTP access.
-</br></br>
-# HowTo </br>
 
-<b>Arduino Side:</b>
+
+# HowTo </br>
+We have divided this part 
+
+<b>- Arduino Side:</b>
 </br>
 What we need:</br>
 </br>
