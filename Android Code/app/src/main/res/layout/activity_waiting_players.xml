@@ -7,9 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="moderwarfareapp.modernwarfare.WaitingPlayersActivity">
+    tools:context=".Activity.PlayersWaitingArea">
 
-    <RelativeLayout tools:context=".WaitingCreatorActivity"
+    <RelativeLayout tools:context=".Activity.CreatorWaitingArea"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -41,22 +41,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Waiting for the start"
-            android:id="@+id/textView4"
-            android:textSize="26dp"
-            android:layout_alignParentTop="true"
+            android:text="Game will start automatically"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/share_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="25dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Game will start automatically"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView4"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Current Players: 1"
+            android:id="@+id/currentPlayers"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp" />
+            android:layout_above="@+id/bUnsubscribe"
+            android:layout_marginBottom="35dp" />
+
+        <com.facebook.share.widget.ShareButton
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp" />
+
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Waiting for the start"
+        android:id="@+id/textView4"
+        android:textSize="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 </RelativeLayout>

@@ -17,14 +17,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="kindOfGame"
-            android:id="@+id/kindOfGame"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="18dp" />
 
     </LinearLayout>
 
@@ -46,12 +38,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Small Text"
-            android:id="@+id/currentplayers"
-            android:layout_marginLeft="15dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="kindOfGame"
+            android:id="@+id/kindOfGame"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginLeft="18dp" />
 
     </LinearLayout>
 
