@@ -98,7 +98,7 @@ Create (Post), Read (Get) Update (Put) Delete (delete).
 </br>
 <p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRest.png" width="500" heigth="500"/> </p></br>
 here others custom routes:
-<p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRestCustom.png" width="500" heigth="500"/> </p></br>
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRestCustom.png" width="500" heigth="500"/></p>
 
 #Arduino Side:
 </br>
