@@ -23,7 +23,7 @@ Trying to find a valid alternative, i focused my attention on Node.js, an event-
 
 According to <a href="http://blog.soulserv.net/from-php-to-nodejs-part-ii-performances/">those</a> benchmarks, the median result give Javascript roughly 10 times faster than PHP.
 
-Usually benchmarks doesn't tell us the truth, but is well known and confirmed that Javascript/V8 is faster than PHP. It's hard to tell how faster Javascript/V8 is for real world application, but expect +20\% to +50\% faster than the other one. 
+Usually benchmarks doesn't tell us the truth, but is well known and confirmed that Javascript/V8 is faster than PHP. It's hard to tell how faster Javascript/V8 is for real world application, but expect +20% to +50% faster than the other one. 
 
 Furthermore Node.js must be chosen with a great number of concurrency requests, so it suits FutureWarfare.
 
@@ -52,7 +52,7 @@ Another important issue, is the LaserGun. With the first version of FutureWarfar
 
 - Google Maps APIs: https://developers.google.com/maps/documentation/android-api
 
-- C9: a cloud IDE, to develop the server: https://c9.io/ 
+- C9: a cloud IDE: https://c9.io/ 
 
 - Bluetooth Connection [Module HC-06]: http://www.amazon.it/dp/B0113MUGW0
 
@@ -79,18 +79,18 @@ The data schema of FutureWarfare is very simple, since it is composed by 3 colle
 - Games
 - PlayersInGame
 - Supplies
-</br>
 <p align="center"><img src="http://modernwarfareapp.altervista.org/images/Collections.png" width="600" heigth="600"/></p>
 
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect to real-time applications; so it is very suitable to develop scalable and performance applications.
 Node.js natively manages a HTTP server library, in this way is possible to run a web server without the use of external software.
 </br>
 The Future Warfare server is able to interact with the database and with the client: 
-1) to comunicate with the database, collections (discussed before) have been modelized thanks to "mongoose", a MongoDB object modeling tool designed to work in an asynchronous environment.
+
+1) To comunicate with the database, collections (discussed before) have been modelized thanks to "mongoose", a MongoDB object modeling tool designed to work in an asynchronous environment.
 Directly from the official site "Mongoose provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box"
 Its role is to communicate with the database to obtain documents needed to the client.
 
-2) thanks to express is possible to comunicate with the client, using RESTful APIs.
+2) Thanks to express is possible to comunicate with the client, using RESTful APIs.
 Express is a simple but powerful framework that allows to create API REST. 
 
 FutureWarfare implements the following APIs, Format will be JSON, with CRUD functionality: 
@@ -152,7 +152,7 @@ In friendly game you can continue to play until the timer set in Android app is 
 4) Pair the Smartphone with Bluetooth Module HC-06 
 
 Arm band is recommended </br>
-<img src="http://www.photogearetc.com/imglib/images/arkon/XL-ARMBAND/ARK029SM-ARMBAND%20~%20ARKON%20armband%20on%20model%20touch%20screen.jpg" width="500" heigth="500"/>  
+<p align="center"><img src="http://www.photogearetc.com/imglib/images/arkon/XL-ARMBAND/ARK029SM-ARMBAND%20~%20ARKON%20armband%20on%20model%20touch%20screen.jpg" width="500" heigth="500"/></p>
 
 
 For more information of Android Side you can check the web site, presentation or demo link.
