@@ -161,15 +161,14 @@ Arm band is recommended </br>
 <p align="center"><img src="http://www.photogearetc.com/imglib/images/arkon/XL-ARMBAND/ARK029SM-ARMBAND%20~%20ARKON%20armband%20on%20model%20touch%20screen.jpg" width="500" heigth="500"/></p>
 
 
-For more information of Android Side you can check the web site, presentation or demo link.
+For more information of Android Side you can check the web site, presentation or demo link.</br></br>
 
-Enjoy ;) 
+Enjoy ;) </br></br>
 
 
-# Developer
-
-<img src="http://modernwarfareapp.altervista.org/images/Andrea2.png" width="100" heigth="100"/>  
+<big> Developer </big> 
 <p align="center">
+<img src="http://modernwarfareapp.altervista.org/images/Andrea2.png" width="100" heigth="100"/>  
 <b>Andrea Prosseda</b>
 </p>
 LinkedIn Page: https://www.linkedin.com/in/andrea-prosseda-2b8651116?trk=hp-identity-name
