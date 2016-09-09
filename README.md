@@ -186,4 +186,3 @@ Students at La Sapienza - University of Rome http://www.uniroma1.it
 Master of Science in Engineering in Computer Science http://cclii.dis.uniroma1.it/?q=en/msecs
 
 Department of DIAG http://www.diag.uniroma1.it# Future-Warfare
-# Future-Warfare
