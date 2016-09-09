@@ -128,34 +128,34 @@ What we need:</br>
 The environment creation abovementioned is perfectly suitable for the both solution presented.
 </br></br></br>
 
-You can find a demo of Arduino <a href="https://vimeo.com/182035170">here</a>
+You can find a demo of Arduino <a href="https://vimeo.com/182035170">here</a> </br> </br>
 
-1) Configure Arduino according to the imagine below </br>
+1) Configure Arduino according to the imagine below </br> </br>
 
-<img src="http://modernwarfareapp.altervista.org/images/Fritzing2.png" width="350" heigth="350"/>	</br>
+<img src="http://modernwarfareapp.altervista.org/images/Fritzing2.png" width="350" heigth="350"/>	</br></br>
 
-2) Import Arduino code that you can find in the folder Arduino Code -> Future Warfare -> Future Warfare.ino</br>
+2) Import Arduino code that you can find in the folder Arduino Code -> Future Warfare -> Future Warfare.ino</br></br>
 
-3) Download and Install in your Arduino IDE the library "IRremote" that you can find in the folder Arduino Code -> libraries</br>
+3) Download and Install in your Arduino IDE the library "IRremote" that you can find in the folder Arduino Code -> libraries</br></br>
 
-4) Load code in your Arduino</br>
+4) Load code in your Arduino</br></br>
 
-Lighting and sounding scenes advise you of the correctness operation.
+Lighting and sounding scenes advise you of the correctness operation.</br>
 After registration, login and creation of the match with the modality set, you can finally begin to game.
-The receiver is steadily monitoring for an incoming signal: when an enemy will hit it light and sound will notificate it.
-You can continue to play just if your life is greater than three (in deathMatch modality). 
-In friendly game you can continue to play until the timer set in Android app is over.
+The receiver is steadily monitoring for an incoming signal: when an enemy will hit it light and sound will notificate it.</br>
+You can continue to play just if your life is greater than three (in deathMatch modality). </br>
+In friendly game you can continue to play until the timer set in Android app is over.</br></br>
 
 
-#Android Side:
+#Android Side:</br></br>
 
-1) Install .apk file of our application called Future Warfare on your Android Smartphone
+1) Install .apk file of our application called Future Warfare on your Android Smartphone</br></br>
 
-2) Turn on GPS and Bluetooth
+2) Turn on GPS and Bluetooth</br></br>
 
-3) Run the App "Future Warfare"
+3) Run the App "Future Warfare"</br></br>
 
-4) Pair the Smartphone with Bluetooth Module HC-06 
+4) Pair the Smartphone with Bluetooth Module HC-06 </br></br>
 
 Arm band is recommended </br>
 <p align="center"><img src="http://www.photogearetc.com/imglib/images/arkon/XL-ARMBAND/ARK029SM-ARMBAND%20~%20ARKON%20armband%20on%20model%20touch%20screen.jpg" width="500" heigth="500"/></p>
