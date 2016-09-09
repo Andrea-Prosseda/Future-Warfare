@@ -2,6 +2,8 @@
 
 #Future Warfare
 
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/logoreadme.png" width="600" heigth="600"/></p>
+
 The idea of our project is the realization of the classic Laser Game with the support and integration of Android application.
 Future Warfare is a game like paintball or airsoft without pain due to his laser nature to simulate the tagging / shooting of other players or targets.
 
@@ -84,6 +86,7 @@ The data schema of FutureWarfare is very simple, since it is composed by 3 colle
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect to real-time applications; so it is very suitable to develop scalable and performance applications.
 Node.js natively manages a HTTP server library, in this way is possible to run a web server without the use of external software.
 </br>
+
 The Future Warfare server is able to interact with the database and with the client: 
 
 1) To comunicate with the database, collections (discussed before) have been modelized thanks to "mongoose", a MongoDB object modeling tool designed to work in an asynchronous environment.
@@ -163,15 +166,12 @@ Enjoy ;)
 # Developer
 
 <img src="http://modernwarfareapp.altervista.org/images/Andrea2.png" width="100" heigth="100"/>  
-
+<p align="center">
 <b>Andrea Prosseda</b>
-
+</p>
 LinkedIn Page: https://www.linkedin.com/in/andrea-prosseda-2b8651116?trk=hp-identity-name
 
 Email: andreaprosseda@gmail.com
-
-<img src="http://modernwarfareapp.altervista.org/images/Gianluca2.png" width="100" heigth="100"/>  
-
 
 </br></br>
 <b> University of Rome "La Sapienza" </b> 
