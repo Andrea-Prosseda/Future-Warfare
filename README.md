@@ -4,10 +4,10 @@
 
 <p align="center"><img src="http://modernwarfareapp.altervista.org/images/logoreadme.png" width="600" heigth="600"/></p>
 
-The idea of our project is the realization of the classic Laser Game with the support and integration of Android application.
+The idea of this project is the realization of the classic Laser Game with the support and integration of Android application.
 Future Warfare is a game like paintball or airsoft without pain due to his laser nature to simulate the tagging / shooting of other players or targets.
 
-Our concept is born with the aim to involve people in this kind of game without the need to go in an apposite Laser game center. With the requirements we’ll see later, every one can finally gets enjoy playing in every moment everywhere.
+The concept is born with the aim to involve people in this kind of game without the need to go in an apposite Laser game center. With the requirements we’ll see later, every one can finally gets enjoy playing in every moment everywhere.
 
 Thanks to HC-06 module bluetooth, we have the possibilty to always check our position in the map, steadily control our munitions and life, without forgetting enemies in the match. Moreover, the game provides friendly and deathmatch modality: in this way, fun/enjoy is ensured! 
 
@@ -17,13 +17,14 @@ Thanks to HC-06 module bluetooth, we have the possibilty to always check our pos
 </br>
 You can find the presentation of the project <a href="http://www.slideshare.net/AndreaProsseda/future-warfare-64040999">here</a>
 
-Demo <a href="https://vimeo.com/174756680">here</a>
+Demo <a href="https://vimeo.com/182035166">here</a>
 
 #Why the new branch?
 At the beginning the database of FutureWarfare was hosted in Altervista: Altervista is an italian web platform that provides the possibility to create a web site with PHP, database SQL and FTP access. This implied the use of PHP, but PHP for application realtime and too much database calls is not very efficient.
-Trying to find a valid alternative, i focused my attention on Node.js, an event-driven platform for JavaScript V8,
 
-According to <a href="http://blog.soulserv.net/from-php-to-nodejs-part-ii-performances/">those</a> benchmarks, the median result give Javascript roughly 10 times faster than PHP.
+Trying to find a valid alternative, i focused my attention on Node.js, an event-driven platform for JavaScript V8.
+
+According to <a href="http://blog.soulserv.net/from-php-to-nodejs-part-ii-performances/">these</a> benchmarks, the median result give Javascript roughly 10 times faster than PHP.
 
 Usually benchmarks doesn't tell us the truth, but is well known and confirmed that Javascript/V8 is faster than PHP. It's hard to tell how faster Javascript/V8 is for real world application, but expect +20% to +50% faster than the other one. 
 
@@ -127,15 +128,17 @@ What we need:</br>
 The environment creation abovementioned is perfectly suitable for the both solution presented.
 </br></br></br>
 
-1) Configure Arduino according to the imagine below
+You can find a demo of Arduino <a href="https://vimeo.com/182035170">here</a>
 
-<img src="http://modernwarfareapp.altervista.org/images/Fritzing2.png" width="350" heigth="350"/>	
+1) Configure Arduino according to the imagine below </br>
 
-2) Import Arduino code that you can find in the folder Arduino Code -> Future Warfare -> Future Warfare.ino
+<img src="http://modernwarfareapp.altervista.org/images/Fritzing2.png" width="350" heigth="350"/>	</br>
 
-3) Download and Install in your Arduino IDE the library "IRremote" that you can find in the folder Arduino Code -> libraries
+2) Import Arduino code that you can find in the folder Arduino Code -> Future Warfare -> Future Warfare.ino</br>
 
-4) Load code in your Arduino
+3) Download and Install in your Arduino IDE the library "IRremote" that you can find in the folder Arduino Code -> libraries</br>
+
+4) Load code in your Arduino</br>
 
 Lighting and sounding scenes advise you of the correctness operation.
 After registration, login and creation of the match with the modality set, you can finally begin to game.
