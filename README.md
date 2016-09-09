@@ -104,7 +104,7 @@ Create (Post), Read (Get) Update (Put) Delete (delete).
 here others custom routes:
 <p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRestCustom.png" width="500" heigth="500"/></p>
 
-#Arduino Side:
+<b>Arduino Side:</b>
 </br>
 What we need:</br>
 </br>
@@ -147,7 +147,7 @@ You can continue to play just if your life is greater than three (in deathMatch 
 In friendly game you can continue to play until the timer set in Android app is over.</br></br>
 
 
-#Android Side:</br></br>
+<b> Android Side:</b></br></br>
 
 1) Install .apk file of our application called Future Warfare on your Android Smartphone</br></br>
 
