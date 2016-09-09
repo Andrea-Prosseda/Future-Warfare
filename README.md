@@ -166,9 +166,10 @@ For more information of Android Side you can check the web site, presentation or
 Enjoy ;) </br></br>
 
 
-<big> Developer </big> 
+<b> Developer </b> 
 <p align="center">
 <img src="http://modernwarfareapp.altervista.org/images/Andrea2.png" width="100" heigth="100"/>  
+</br>
 <b>Andrea Prosseda</b>
 </p>
 LinkedIn Page: https://www.linkedin.com/in/andrea-prosseda-2b8651116?trk=hp-identity-name
