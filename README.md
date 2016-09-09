@@ -17,6 +17,32 @@ You can find the presentation of the project <a href="http://www.slideshare.net/
 
 Demo <a href="https://vimeo.com/174756680">here</a>
 
+#Why the new branch?
+At the beginning the database of FutureWarfare was hosted in Altervista: Altervista is an italian web platform that provides the possibility to create a web site with PHP, database SQL and FTP access. This implied the use of PHP, but PHP for application realtime and too much database calls is not very efficient.
+Trying to find a valid alternative, i focused my attention on Node.js, an event-driven platform for JavaScript V8,
+
+According to <a href="http://blog.soulserv.net/from-php-to-nodejs-part-ii-performances/">those</a> benchmarks, the median result give Javascript roughly 10 times faster than PHP.
+
+Usually benchmarks doesn't tell us the truth, but is well known and confirmed that Javascript/V8 is faster than PHP. It's hard to tell how faster Javascript/V8 is for real world application, but expect +20\% to +50\% faster than the other one. 
+
+Furthermore Node.js must be chosen with a great number of concurrency requests, so it suits FutureWarfare.
+
+Node.js works perfectly with MongoDB, a NoSQL database. Is well known that performances are increased with non relational DB, so the choice is practically forced: Node.js + MongoDB.
+
+Another important issue, is the LaserGun. With the first version of FutureWarfare it was possible to use only the "Ardunino LaserGun" developed by us. This because shots and deads was managed by Arduino. But with this new version, the bluetooth connection is completely redeveloped: when the gun shots or is hit, it sends a message bluetooth to the app that manages everything. In this way is possible to use every kind of Bluetooth Guns in commerce with a little change of variables in the bluetooth thread.
+
+#Fix and new Features
+- The app is completely modified to interact it with the new database and server.
+- Threads have been replaced with AsyncTasks. The first one is not simple to use in the correct way, furthermore is not possible to modify the user interface from it. The second one, instead, enables proper and easy use of the UI thread.
+- Removed the classic and boring Register/Login activity, giving space to the Facebook Login.
+- Now is possible to share on Facebook a post with the details of the game we have created. Our friends can join in our game.
+- More controls and checking in background.
+- Now at the end of the game, all data of the game is deleted.
+- More improvements of the MapsActivity.
+- Add a filter to the JoinGame List: now are shown only game not started.
+- Bluetooth connection is completely redeveloped. 
+- Add general fixes and improvements.
+
 
 # Used Tecnologies
 
@@ -26,7 +52,7 @@ Demo <a href="https://vimeo.com/174756680">here</a>
 
 - Google Maps APIs: https://developers.google.com/maps/documentation/android-api
 
-- Hosting Database "Altervista.org": http://it.altervista.org
+- C9: a cloud IDE, to develop the server: https://c9.io/ 
 
 - Bluetooth Connection [Module HC-06]: http://www.amazon.it/dp/B0113MUGW0
 
@@ -39,25 +65,47 @@ Demo <a href="https://vimeo.com/174756680">here</a>
 - IRremote library: https://github.com/z3t0/Arduino-IRremote
 
 # Architecture 
+The architecture of FutureWarfare expects:
+- Data Component: it uses MongoDB as NoSQL database
+- Server Component: realized using Node.js
+- Client Component: as we already discussed, the client side is developed in Android and the smartphone is able to communicate with Arduino thanks to HC-06 module</br>
 
-As we already discussed, there are two main connections:</br>
--Android application and Arduino side, which dialogues through Bluetooth</br>
--Android application and backend side, which dialogues through MySQL DataBase</br>
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/NewArchitecture.png" width="500" heigth="500"/></p>
 
-<p align="center"><img src="http://modernwarfareapp.altervista.org/images/Architecture.png" width="500" heigth="500"/></p>
+#Database & Server: MongoDB & Node.js
+MongoDB is an increasingly popular document-based, scalable, reliable and high-performance NoSQL database, organized in collections: documents (or simple rows in relational databases) are grouped in collections (tables in relational databases), so collections are sets of documents.
 
-#Backend
-Here an Er Scheme of our DataBase:
-<p align="center"><img src="http://modernwarfareapp.altervista.org/images/ErScheme.png" width="500" heigth="500"/> </p></br>
+The data schema of FutureWarfare is very simple, since it is composed by 3 collections:
+- Games
+- PlayersInGame
+- Supplies
+</br>
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/Collections.png" width="500" heigth="500"/></p>
 
-And here the Use Case Diagram:
-<p align="center"><img src="http://modernwarfareapp.altervista.org/images/UseCaseDiagram.png" width="500" heigth="500"/> </p></br>
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect to real-time applications; so it is very suitable to develop scalable and performance applications.
+Node.js natively manages a HTTP server library, in this way is possible to run a web server without the use of external software.
+</br>
+The Future Warfare server is able to interact with the database and with the client: 
+1) to comunicate with the database, collections (discussed before) have been modelized thanks to "mongoose", a MongoDB object modeling tool designed to work in an asynchronous environment.
+Directly from the official site "Mongoose provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box"
+Its role is to communicate with the database to obtain documents needed to the client.
 
-The server hosting our DB and WebSite is Altervista: Altervista is an italian web platform founded by a Turin polytechnic student in 2000. It provides the possibility to create a web site with PHP, database SQL and FTP access.
-</br></br>
+2) thanks to express is possible to comunicate with the client, using RESTful APIs.
+Express is a simple but powerful framework that allows to create API REST. 
+
+FutureWarfare implements the following APIs, Format will be JSON, with CRUD functionality: 
+Create (Post), Read (Get) Update (Put) Delete (delete).
+</br>
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRest.png" width="500" heigth="500"/> </p></br>
+</br>
+here others custom routes:
+<p align="center"><img src="http://modernwarfareapp.altervista.org/images/ApiRestCustom.png" width="500" heigth="500"/> </p></br>
+
+</br>
+</br>
 # How To
 </br>
-<b>- Arduino Side:</b>
+#Arduino Side:
 </br>
 What we need:</br>
 </br>
@@ -98,7 +146,7 @@ You can continue to play just if your life is greater than three (in deathMatch 
 In friendly game you can continue to play until the timer set in Android app is over.
 
 
-<b>- Android Side</b>
+#Android Side:
 
 1) Install .apk file of our application called Future Warfare on your Android Smartphone
 
@@ -108,12 +156,16 @@ In friendly game you can continue to play until the timer set in Android app is 
 
 4) Pair the Smartphone with Bluetooth Module HC-06 
 
+Arm band is recommended 
+<img src="http://www.photogearetc.com/imglib/images/arkon/XL-ARMBAND/ARK029SM-ARMBAND%20~%20ARKON%20armband%20on%20model%20touch%20screen.jpg" width="100" heigth="100"/>  
+
+
 For more information of Android Side you can check the web site, presentation or demo link.
 
 Enjoy ;) 
 
 
-# Team
+# Developer
 
 <img src="http://modernwarfareapp.altervista.org/images/Andrea2.png" width="100" heigth="100"/>  
 
@@ -125,19 +177,6 @@ Email: andreaprosseda@gmail.com
 
 <img src="http://modernwarfareapp.altervista.org/images/Gianluca2.png" width="100" heigth="100"/>  
 
-<b>Gianluca Leo</b>
-
-LinkedIn Page: https://www.linkedin.com/in/gianluca-leo-724032116?trk=hp-identity-name
-
-Email: gianluca.leo.19@gmail.com
-
-<img src="http://modernwarfareapp.altervista.org/images/Luca2.png" width="100" heigth="100"/>  
-
-<b>Luca Mazzotti</b>
-
-LinkedIn Page: https://www.linkedin.com/in/luca-mazzotti-532037116?trk=hp-identity-name
-
-Email: luca_mazzotti@hotmail.it
 
 </br></br>
 <b> University of Rome "La Sapienza" </b> 
