@@ -23,9 +23,10 @@ import moderwarfareapp.modernwarfare.Utility.GlobalValue;
 import moderwarfareapp.modernwarfare.Utility.Hex;
 
 public class CreatorWaitingArea extends AppCompatActivity {
-    private static String nameGame;
+    private static String nameGame;             //is the name of the game created by the user
     private TextView numberOfPlayersInGame;     //this textview shows number of user joined in the game
-    private AsyncTask checkNPlayersTask;
+    private AsyncTask checkNPlayersTask;        //asynctask controls the number of the players joined in the game
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
