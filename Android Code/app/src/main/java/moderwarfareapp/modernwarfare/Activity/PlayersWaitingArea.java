@@ -26,8 +26,8 @@ public class PlayersWaitingArea extends AppCompatActivity {
     private static  String nameGame, kindOfGame;
     private String username;
     private TextView numberOfPlayersInGame;     //this textview shows number of user joined in the game
-    private AsyncTask checkGameStarted;
-    private AsyncTask checkNPlayersTask;
+    private AsyncTask checkGameStarted;         //asynctask controls that the field "started" is set to "1", then starts the game
+    private AsyncTask checkNPlayersTask;        //asynctask controls the number of the players joined in the game
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
