@@ -1,6 +1,6 @@
 //dependencies
-var express = require('express');           //framework che semplifica APIs
-var mongoose = require('mongoose');         //libreria di mongodb
+var express = require('express');           
+var mongoose = require('mongoose');         
 var bodyParser = require('body-parser')
 
 //connect to mongoDB:	
