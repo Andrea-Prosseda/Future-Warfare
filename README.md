@@ -40,6 +40,7 @@ Another important issue, is the LaserGun. With the first version of FutureWarfar
 - Removed the classic and boring Register/Login activity, giving space to the Facebook Login.
 - Now is possible to share on Facebook a post with the details of the game we have created. Our friends can join in our game.
 - More controls and checking in background.
+- MapsActivity now is more fast. The same for the "i" button [deleted the request of details everytime the button was clicked]
 - Now at the end of the game, all data of the game is deleted.
 - More improvements of the MapsActivity.
 - Add a filter to the JoinGame List: now are shown only game not started.
