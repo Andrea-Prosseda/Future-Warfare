@@ -14,9 +14,9 @@ import moderwarfareapp.modernwarfare.AsyncTasks.WaitingAreas.AddNewGame;
 import moderwarfareapp.modernwarfare.R;
 
 public class CreateGame extends AppCompatActivity {
-    private static  RadioGroup radioGroup;
+    private static  RadioGroup radioGroup;      //the radioGroup contains buttons "Friendly Match" and "Death Match"
     private static RadioButton radioButton;
-    private static String kindOfGame;   //It's a string that will contains the kind of the game (Death Match or Friendly Match)
+    private static String kindOfGame;           //It's a string that will contains the kind of the game (Death Match or Friendly Match)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
