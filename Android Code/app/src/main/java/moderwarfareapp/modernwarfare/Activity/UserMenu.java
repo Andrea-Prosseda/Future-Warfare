@@ -47,7 +47,7 @@ public class UserMenu extends AppCompatActivity {
         connected = GlobalValue.getInstance().getConnected();   //the smartphone is connected with arduino's bluetooth?
 
         photoFb= (ImageView) findViewById(R.id.profile_image);
-        welcomeMessage = (TextView) findViewById(R.id.tvWelcomeMsg); //this field will contain the welcome message for the user
+        welcomeMessage = (TextView) findViewById(R.id.tvWelcomeMsg);                //this field will contain the welcome message for the user
         final Button bcreateGame = (Button) findViewById(R.id.createGame);          //button used for the creation of the game
         final Button bjoinGame = (Button) findViewById(R.id.joinGame);              //button used to join in a existent game
         final Button bluetoothButton = (Button) findViewById(R.id.bluetoothButton); //button used to connect with arduino's bluetooth
@@ -56,7 +56,7 @@ public class UserMenu extends AppCompatActivity {
 
         final String nameGame = intent.getStringExtra("nameGame");
 
-        GetUserInfo();
+        GetUserInfo();      //get all data of the user from facebook
 
         bcreateGame.setOnClickListener(new View.OnClickListener() {
             @Override
